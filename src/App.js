@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Countries from "./components/Countries";
 import Error from "./components/Error";
+import SingleCountry from "./components/SingleCountry";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <div className='App'>
         <Routes>
           <Route path='/' element={<Countries />}></Route>
+          <Route path='/:name' element={<SingleCountry />}></Route>
           <Route path='*' element={<Error />}></Route>
         </Routes>
       </div>
