@@ -4,6 +4,24 @@ import Article from "./Article";
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const regions = [
+    { name: "Europe" },
+    {
+      name: "Asia",
+    },
+    {
+      name: "Africa",
+    },
+    {
+      name: "Oceania",
+    },
+    {
+      name: "Americas",
+    },
+    {
+      name: "Antarctic",
+    },
+  ];
 
   useEffect(() => {
     const getCountries = async () => {
@@ -30,9 +48,26 @@ const Countries = () => {
       console.error(error);
     }
   };
+
+  const filterByRegion = async (region) => {
+    try {
+      const res = await fetch(
+        `https://restcountries.com/v3.1/region/${region}`,
+      );
+      const data = await res.json();
+      setCountries(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSearchCountry = (e) => {
     e.preventDefault();
     searchCountry();
+  };
+  const handleFilterByRegion = (e) => {
+    e.preventDefault();
+    filterByRegion();
   };
 
   return (
@@ -59,6 +94,21 @@ const Countries = () => {
                 onChange={(e) => setSearchText(e.target.value)}
                 className='py-3 px-4 text-gray-600 placeholder-gray-600 w-full shadow rounded outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-800 dark:focus:bg-gray-700 transition-all duration-200'
               />
+            </form>
+
+            <form onSubmit={handleFilterByRegion}>
+              <select
+                name='filter-by-region'
+                id='filter-by-region'
+                value={regions.name}
+                onChange={(e) => filterByRegion(e.target.value)}
+                className='w-52 py-3 px-4 outline-none shadow rounded text-gray-600 dark:text-gray-400 dark:bg-gray-800 dark:focus:bg-gray-700'>
+                {regions.map((region, index) => (
+                  <option key={index} value={region.name}>
+                    {region.name}
+                  </option>
+                ))}
+              </select>
             </form>
           </div>
 
