@@ -6,6 +6,10 @@ const SingleCountry = () => {
   const { name } = useParams();
 
   useEffect(() => {
+    document.title = `Countries | ${name}`;
+  }, [name]);
+
+  useEffect(() => {
     const getSingleCountry = async () => {
       try {
         const res = await fetch(`https://restcountries.com/v3.1/name/${name}`);

@@ -24,6 +24,10 @@ const Countries = () => {
   ];
 
   useEffect(() => {
+    document.title = "Showing All Countries";
+  }, []);
+
+  useEffect(() => {
     const getCountries = async () => {
       try {
         const res = await fetch("https://restcountries.com/v3.1/all");
