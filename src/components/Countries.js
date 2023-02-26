@@ -3,6 +3,7 @@ import Article from "./Article";
 
 const Countries = () => {
   const [countries, setCountries] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     const getCountries = async () => {
@@ -18,6 +19,22 @@ const Countries = () => {
     getCountries();
   }, []);
 
+  const searchCountry = async () => {
+    try {
+      const res = await fetch(
+        `https://restcountries.com/v3.1/name/${searchText}`,
+      );
+      const data = await res.json();
+      setCountries(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleSearchCountry = (e) => {
+    e.preventDefault();
+    searchCountry();
+  };
+
   return (
     <>
       {!countries ? (
@@ -27,6 +44,23 @@ const Countries = () => {
       ) : (
         <section className='container mx-auto p-8'>
           {/* form */}
+
+          <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8'>
+            <form
+              onSubmit={handleSearchCountry}
+              autoComplete='off'
+              className='max-w-4xl md:flex-1'>
+              <input
+                type='text'
+                name='search'
+                placeholder='Search for a country by its name'
+                required
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className='py-3 px-4 text-gray-600 placeholder-gray-600 w-full shadow rounded outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-800 dark:focus:bg-gray-700 transition-all duration-200'
+              />
+            </form>
+          </div>
 
           <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
             {countries.map((country) => (
