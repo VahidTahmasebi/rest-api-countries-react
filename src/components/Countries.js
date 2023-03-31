@@ -4,6 +4,7 @@ import Article from "./Article";
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [searchText, setSearchText] = useState("");
+
   const regions = [
     { name: "Europe" },
     {
@@ -32,6 +33,7 @@ const Countries = () => {
       try {
         const res = await fetch("https://restcountries.com/v3.1/all");
         const data = await res.json();
+        
         setCountries(data.slice(0, 10));
       } catch (error) {
         console.error(error);
@@ -47,6 +49,7 @@ const Countries = () => {
         `https://restcountries.com/v3.1/name/${searchText}`,
       );
       const data = await res.json();
+      
       setCountries(data);
     } catch (error) {
       console.error(error);
@@ -59,6 +62,7 @@ const Countries = () => {
         `https://restcountries.com/v3.1/region/${region}`,
       );
       const data = await res.json();
+
       setCountries(data);
     } catch (error) {
       console.error(error);
@@ -69,6 +73,7 @@ const Countries = () => {
     e.preventDefault();
     searchCountry();
   };
+
   const handleFilterByRegion = (e) => {
     e.preventDefault();
     filterByRegion();

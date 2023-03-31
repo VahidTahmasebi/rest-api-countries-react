@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 const SingleCountry = () => {
   const [country, setCountry] = useState([]);
   const { name } = useParams();
-
+  
   useEffect(() => {
     document.title = `Countries | ${name}`;
   }, [name]);
@@ -13,10 +13,9 @@ const SingleCountry = () => {
     const getSingleCountry = async () => {
       try {
         const res = await fetch(`https://restcountries.com/v3.1/name/${name}`);
-        console.log(res);
         const data = await res.json();
+
         setCountry(data);
-        console.log(country);
       } catch (error) {
         console.error(error);
       }
